@@ -51,7 +51,7 @@ type (
 // für jede hinterlegt RSS URL ob es einen neuen Beitrag gibt.
 // Gibt es einen neuen Beitrag wird dieser an den Benutzer gesendet.
 // Momentan wird Telegram als Empfänger unterstüzt.
-func StartCtrl(log zap.Logger, db *sql.DB, chatID int64, telegram *tgbotapi.BotAPI) {
+func StartCtrl(log zap.Logger, db *sql.DB, telegram *tgbotapi.BotAPI, chatID int64, interval string) {
 	ctrl := feedCtrl{
 		log:      log,
 		store:    &pgsqlStore{db},
@@ -60,7 +60,8 @@ func StartCtrl(log zap.Logger, db *sql.DB, chatID int64, telegram *tgbotapi.BotA
 	}
 
 	c := cron.New()
-	c.AddFunc("@every 5s", ctrl.run)
+	d := fmt.Sprintf("@every %v", interval)
+	c.AddFunc(d, ctrl.run)
 	c.Start()
 }
 
