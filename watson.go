@@ -43,7 +43,7 @@ type (
 
 func ListenTelegramWebhook(config TelegramConfig, telegramClient *tgbotapi.BotAPI, handlers []TelegramWebhookHandler) {
 
-	url := config.WebhookURLHost + config.WebhookURLPath
+	url := "https://" + config.WebhookURLHost + config.WebhookURLPath
 	_, err := telegramClient.SetWebhook(tgbotapi.NewWebhookWithCert(url, config.WebhookCert))
 	if err != nil {
 		log.Fatal(err)
