@@ -1,2 +1,3 @@
 *.swp
 watson.json
+cmd/watson*
