@@ -2,6 +2,7 @@ package chatid
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/tochti/watson"
 	"github.com/uber-go/zap"
@@ -18,7 +19,7 @@ func Handler(log zap.Logger, telegramClient *tgbotapi.BotAPI) watson.TelegramWeb
 		}
 		msg := update.Message
 
-		if msg.Text != TRIGGER {
+		if strings.ToLower(msg.Text) != TRIGGER {
 			return
 		}
 		log.Debug("Received chat id request")
